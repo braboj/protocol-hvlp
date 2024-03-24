@@ -6,7 +6,7 @@ Depending on the parameters passed to the socket constructor, the socket can be 
 protocols and different types of communication. It unifies and simplifies the process of sending and receiving data
 across a network regardless of the underlying protocol stack and operating system.
 
-Typically the socket API contains the following methods:
+Typically, the socket API contains the following methods:
 
 - socket(): creates a new socket object
 - bind(): binds the socket to an address and port number on the local machine
