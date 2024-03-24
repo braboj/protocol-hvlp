@@ -49,7 +49,7 @@ class HvlpSession(Session):
 
     The session is a thread that works with a specific protocol version and handles the incoming
     packets from the client. The session is also responsible to forward incoming publish packets
-    to all the subscribers of the topic in the publish packet.
+    to all the subscribers of the topic in the `publish` packet.
 
     Args:
           client        : Client connection
@@ -94,7 +94,7 @@ class HvlpSession(Session):
     ###############################################################################################
 
     def on_packet(self, packet):
-        """ Packet handler that might be overriden by a custom session implementation
+        """ Packet handler that might be overridden by a custom session implementation
 
         Args:
             packet  : A packet object
@@ -122,7 +122,7 @@ class HvlpSession(Session):
     ###############################################################################################
 
     def on_subscribe(self, topics):
-        """ Subscribe the client on subscribe request
+        """ Subscribe the client on `subscribe` request
 
         Args:
             topics  : List of topic names
@@ -135,7 +135,7 @@ class HvlpSession(Session):
     ###############################################################################################
 
     def on_unsubscribe(self, topics):
-        """ Unsubscribe the client on subscribe request
+        """ Unsubscribe the client on `subscribe` request
 
         Args:
             topics  : List of topic names
@@ -148,7 +148,7 @@ class HvlpSession(Session):
     ###############################################################################################
 
     def on_publish(self, packet):
-        """ Forward publosh packets to the topic subscribers
+        """ Forward publish packets to the topic subscribers
 
         Args:
             packet  : Packet object
@@ -175,7 +175,7 @@ class HvlpSession(Session):
                 subscriber.sendall(packet.to_bytes())
 
             except socket.error:
-                self.log.debug("Client not accessible, deleting fromt the register")
+                self.log.debug("Client not accessible, deleting from the register")
                 self.register[packet.topic].remove(subscriber)
 
     ###############################################################################################
@@ -196,7 +196,7 @@ class HvlpSession(Session):
                 self.log.debug('CONNECT from {0}'.format(self.client.getpeername()))
                 self.state = self.CONNECTED
 
-            # Ignore packets until the connect packet is detected
+            # Ignore packets until the `connect` packet is detected
             else:
                 self.log.debug("UNEXPECTED PACKET {0} in state {1}".format(packet, self.state))
 
@@ -222,7 +222,7 @@ class HvlpSession(Session):
             with self.lock:
                 stream_length = len(self.stream_in)
 
-            # self.log.debug("STREAM LENGT = {0}".format(stream_length))
+            # self.log.debug("STREAM LENGTH = {0}".format(stream_length))
 
             try:
                 if stream_length < MAX_STREAM_SIZE:
@@ -230,7 +230,7 @@ class HvlpSession(Session):
                     with self.lock:
                         self.stream_in += data
 
-            # Ingore errors when the recv call did not return data on time
+            # Ignore errors when the recv call did not return data on time
             except socket.error as e:
                 if e.errno != self.ERROR_NO_DATA:
                     self.stop()
@@ -242,7 +242,7 @@ class HvlpSession(Session):
 
          1. Register the current session
          2. Start the message sniffer
-         3. While stop signal not active
+         3. While `stop` signal is not active
              3.1. Copy the input buffer
              3.2. Parse a packet from the buffer
              3.3. Update the session state

@@ -14,14 +14,14 @@ def configure_logger(level=logging.DEBUG):
     logging message
 
     Args:
-        level   : The logging level as a constant from the loggin module
+        level   : The logging level as a constant from the logging module
 
     """
 
     logger = logging.getLogger()
     logger.setLevel(level)
 
-    # Get the absoulte path of the executed file and split it into file name and file extension
+    # Get the absolute path of the executed file and split it into a file name and file extension
     f_name, f_ext = os.path.splitext(sys.argv[0])
 
     # Get the file name and add the '.log' extension

@@ -16,7 +16,7 @@ import logging
 class HvlpClient(threading.Thread):
     """Hilscher Variable Length Protocol Client API
 
-    The client sends requests to the broker and listens for publish packets.
+    The client sends requests to the broker and listens for `publish` packets.
 
     Args:
         srv_addr        : Broker IP address
@@ -88,7 +88,7 @@ class HvlpClient(threading.Thread):
             # Send a raw connect packet
             client.send(1, 0)
 
-            # Send a raw subscribe packet with topic 'a'
+            # Send a raw `subscribe` packet with topic 'a'
             client.send(3, 2, 1, 0x61)
 
         """
@@ -113,7 +113,7 @@ class HvlpClient(threading.Thread):
         """ Close the TCP connection
 
         Raises:
-            HvlpConnectionError :   When the broker doesn't respond to FIN packets
+            HvlpConnectionError : When the broker doesn't respond to FIN packets
         """
 
         try:
@@ -128,7 +128,7 @@ class HvlpClient(threading.Thread):
     ###############################################################################################
 
     def connect(self, payload=""):
-        """ Send a connect request packet to the broker
+        """ Send a `connect` request packet to the broker
 
         Args:
             payload    : Bytes as arguments
@@ -141,14 +141,14 @@ class HvlpClient(threading.Thread):
             # Send a default connect request with no payload
             client.connect()
 
-            # Send a connect packet with optional data in the payload section
+            # Send a `connect` packet with optional data in the payload section
             clint.connect('Branko')
 
         """
 
         try:
 
-            # Send the connect packet to the broker
+            # Send the `connect` packet to the broker
             payload = payload.encode('utf-8')
             request = ConnectPacket(payload=payload).to_bytes()
             self.sock.sendall(request)
@@ -159,7 +159,7 @@ class HvlpClient(threading.Thread):
     ###############################################################################################
 
     def disconnect(self, payload=""):
-        """ Send a connect request packet to the broker
+        """ Send a `connect` request packet to the broker
 
         Args:
             payload    : Bytes as arguments
@@ -172,7 +172,7 @@ class HvlpClient(threading.Thread):
             # Send a default connect request with no payload
             client.disconnect()
 
-            # Send a connect packet with optional data in the payload section
+            # Send a `connect` packet with optional data in the payload section
             clint.disconnect('Branko')
 
          """
@@ -191,7 +191,7 @@ class HvlpClient(threading.Thread):
     ###############################################################################################
 
     def subscribe(self, *topics):
-        """ Send a subscribe request to the broker
+        """ Send a `subscribe` request to the broker
 
         Args:
             topics    : Comma-separated topic names
@@ -201,8 +201,8 @@ class HvlpClient(threading.Thread):
 
         Example:
 
-            # Send a subscribe packet for topics 'a', 'b' and 'c'
-            client.subsribe('a', 'b', 'c')
+            # Send a `subscribe` packet for topics 'a', 'b' and 'c'
+            client.subscribe('a', 'b', 'c')
 
         """
 
@@ -220,7 +220,7 @@ class HvlpClient(threading.Thread):
     ###############################################################################################
 
     def unsubscribe(self, *topics):
-        """ Send a unsubscribe request to the broker
+        """ Send an `unsubscribe` request to the broker
 
         Args:
             topics    : Comma-separated topic names
@@ -230,8 +230,8 @@ class HvlpClient(threading.Thread):
 
         Example:
 
-            # Send a unsubscribe packet for topics 'a', 'b', 'c'
-            client.unsubsribe('a', 'b', 'c')
+            # Send an `unsubscribe` packet for topics 'a', 'b', 'c'
+            client.unsubscribe('a', 'b', 'c')
 
         """
 
@@ -249,7 +249,7 @@ class HvlpClient(threading.Thread):
     ###############################################################################################
 
     def publish(self, topic, *data):
-        """ Send a publish request to the broker
+        """ Send a `publish` request to the broker
 
         Args:
             topic    : The topic name
@@ -260,7 +260,7 @@ class HvlpClient(threading.Thread):
 
         Example:
 
-            # Send a publish packet with topic 'a' and the bytes 1 and 2
+            # Send a `publish` packet with topic 'a' and the bytes 1 and 2
             client.publish('a', 1, 2)
 
         """
@@ -287,7 +287,7 @@ class HvlpClient(threading.Thread):
     ###############################################################################################
 
     def listen(self, stop):
-        """ Save raw messages from the borker into the input buffer
+        """ Save raw messages from the broker into the input buffer
 
         Args:
             stop     : Threading event to stop the listener loop
@@ -336,7 +336,7 @@ class HvlpClient(threading.Thread):
     ###############################################################################################
 
     def on_packet(self, packet):
-        """ Default packet handler that can be overriden by a custom application
+        """ Default packet handler that can be overridden by a custom application
 
         Args:
             packet     : Packet object
@@ -407,7 +407,7 @@ class HvlpClientApp(HvlpClient):
             port      : Port of the target broker
 
         Raises:
-            HvlpArgumentsError  :   When either the broker address or the port is missing
+            HvlpArgumentsError  : When either the broker address or the port is missing
 
         """
 
@@ -497,7 +497,7 @@ class HvlpClientApp(HvlpClient):
     ###############################################################################################
 
     def sniffer(self, argument=""):
-        """ Start a sniiffer thread to capture packets from the broker """
+        """ Start a sniffer thread to capture packets from the broker """
 
         try:
             # Activate the new listener
@@ -543,7 +543,7 @@ class HvlpClientApp(HvlpClient):
         if self.listener:
             self.sniffer(argument="stop")
 
-        # Send DISCONNECT packet to the broker
+        # Send `DISCONNECT` packet to the broker
         super(HvlpClientApp, self).disconnect(payload)
 
         # Close the TCP connection
@@ -563,7 +563,7 @@ class HvlpClientApp(HvlpClient):
     ###############################################################################################
 
     def run(self):
-        """" Client appliocation activity """
+        """" Client application activity """
 
         print("HVLP Client started ...")
 

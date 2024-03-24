@@ -54,7 +54,7 @@ class HvlpBrokerRegister(dict):
     ###############################################################################################
 
     def append(self, topics, client):
-        """ Add the client to the topics dictionary
+        """ Add the client to the topic's dictionary
 
         Args:
             topics  : Topic names
@@ -73,7 +73,7 @@ class HvlpBrokerRegister(dict):
     ###############################################################################################
 
     def remove(self, topics, client):
-        """ Remove the client from the topics dictionary
+        """ Remove the client from the topic's dictionary
 
         Args:
             topics  : Topic names

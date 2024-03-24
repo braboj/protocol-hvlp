@@ -10,9 +10,9 @@ class Packet(object):
 
     This class defines the common structure of the packet.
 
-        ID          #   1 Byte
-        LENGTH      #   1 Byte
-        PAYLOAD     #   Up to 255 Bytes
+        ID _________ # 1 Byte
+        LENGTH _____ # 1 Byte
+        PAYLOAD ____ # Up to 255 Bytes
 
     """
 
@@ -83,7 +83,7 @@ class Packet(object):
             elif packet_id == DisconnectPacket.ID:
                 packet = DisconnectPacket.from_bytes(payload)
 
-            # Subcribe packet
+            # Subscribe packet
             elif packet_id == SubscribePacket.ID:
                 packet = SubscribePacket.from_bytes(payload)
 
@@ -111,10 +111,10 @@ class Packet(object):
 class ConnectPacket(Packet):
     """ Connect packet class
 
-    The constructor is reponsible for the preparation of the payload.
+    The constructor is responsible for the preparation of the payload.
 
     Args:
-        payload:    Optional data to be sent by the CONNECT packet
+        payload: Optional data to be sent by the CONNECT packet
 
     """
 
@@ -133,10 +133,10 @@ class ConnectPacket(Packet):
 class DisconnectPacket(Packet):
     """ Disconnect packet class
 
-    The constructor is reponsible for the preparation of the payload.
+    The constructor is responsible for the preparation of the payload.
 
     Args:
-        payload:    Optional data to be sent by the DISCONNECT packet
+        payload: Optional data to be sent by the DISCONNECT packet
 
     """
 
@@ -155,10 +155,10 @@ class DisconnectPacket(Packet):
 class SubscribePacket(Packet):
     """ Subscribe packet class
 
-    The constructor is reponsible for the preparation of the payload.
+    The constructor is responsible for the preparation of the payload.
 
     Args:
-        topics:    A list of topic names
+        topics: A list of topic names
 
     """
 
@@ -208,10 +208,10 @@ class SubscribePacket(Packet):
 class UnsubscribePacket(Packet):
     """ Unsubscribe packet class
 
-    The constructor is reponsible for the preparation of the payload.
+    The constructor is responsible for the preparation of the payload.
 
     Args:
-        topics:    A list of topic names
+        topics: A list of topic names
 
     """
 
@@ -261,7 +261,7 @@ class UnsubscribePacket(Packet):
 class PublishPacket(Packet):
     """ Publish packet class
 
-    The constructor is reponsible for the preparation of the payload.
+    The constructor is responsible for the preparation of the payload.
 
     Args:
         topic   : Topic name

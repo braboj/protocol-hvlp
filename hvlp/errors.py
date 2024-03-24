@@ -2,7 +2,8 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import hvlp.logger
+import hvlp.logger as logger
+
 
 class HvlpError(Exception):
     """ Base error for the application """
