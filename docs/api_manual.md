@@ -1,26 +1,25 @@
 ## Class Diagram
 
-\
-![hvlp_diagram.png](..%2Fassets%2Fhvlp_diagram.png)
+![hvlp_diagram.png](../assets/hvlp_diagram.png)
 
 ## Basic Workflow
 
 1. The Broker, Client and Sessions are Threads
 2. The Broker creates and starts a new session on a new connection
 3. The new session is registered in the broker register
-3. The Session waits for packets from the client and performs actions based on them
-4. The Session uses the register from the broker for subscribe, unsubscribe and publish
-5. Both the Session and the client create packet objects 
+4. The Session waits for packets from the client and performs actions based on them
+5. The Session uses the register from the broker for subscribe, unsubscribe and publish
+6. Both the Session and the client create packet objects 
 
 ## Client API
 The client is a custom thread. The function of the client is to send packets to the broker and 
 to handle incoming publish packets forwarded by the broker.
 
 ```python
-from components.broker import *
-from components.client import *
-from components.packets import *
-from components.errors import *
+from hvlp.broker import *
+from hvlp.client import *
+from hvlp.packets import *
+from hvlp.errors import *
 
 import threading
 import time
@@ -34,8 +33,8 @@ def producer():
     test_client.connect()
     test_client.subscribe('a')
 
-    for i in range(256):
-        test_client.publish('a', i)
+    for k in range(256):
+        test_client.publish('a', k)
         logging.info('PUBLISH')
 
 
@@ -62,7 +61,7 @@ def consumer(stop):
 
 ###################################################################################################
 
-logging.basicConfig(format=b'%(asctime)s - %(funcName)-25s: %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(funcName)-25s: %(message)s', level=logging.INFO)
 
 broker = HvlpBroker()
 broker.start()
@@ -90,11 +89,11 @@ The broker is a custom thread, which spawns session threads on incoming TCP conn
 is protocol agnostic and only offers tools for topic and client registration.
 
 ```python
-from components.broker import *
+from hvlp.broker import *
 import logging
 import socket
 
-logging.basicConfig(format=b'%(asctime)s - %(funcName)-25s: %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(funcName)-25s: %(message)s', level=logging.INFO)
 
 # Spawn several brokers as threads
 brokers = []
@@ -127,8 +126,8 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from components.broker import *
-from components.client import *
+from hvlp.broker import *
+from hvlp.client import *
 import time
 
 
@@ -138,7 +137,7 @@ def test_connect():
     broker.start()
     register = broker.register
 
-    # Perform the TCP handhsake
+    # Perform the TCP handshake
     client = HvlpClient(port=65000)
     client.open()
     time.sleep(1)
@@ -169,6 +168,8 @@ subscribed to these topics. As the register object is shared among all sessions,
 operations should be protected.
 
 ```python
+
+import logging
 
 ###################################################################################################
 
@@ -273,11 +274,13 @@ def test_get_sessions(register):
 
 ## Packet API
 The packet class is the parent of all protocol packets and offers method for serialization and 
-deserialization. The serialization is the process of transfoming an object into bytes, which 
-then can be send over the connection. The deserialization is the oposite process that reads and 
+deserialization. The serialization is the process of transforming an object into bytes, which 
+then can be sent over the connection. The deserialization is the opposite process that reads and 
 transforms the bytes into an instance of the packet class.
 
 ```python
+
+from hvlp.packets import *
 
 ###################################################################################################
 
