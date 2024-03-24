@@ -14,7 +14,7 @@ import logging
 
 
 class Session(with_metaclass(ABCMeta)):
-    """ Template class for all sessions types """
+    """ Template class for all session's types """
 
     def __init__(self, *args, **kwargs):
         super(Session, self).__init__()
