@@ -2,17 +2,17 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import sys
-sys.path.append(str('.'))
-sys.path.append(str('..'))
-
-from broker import *
-from client import *
-from packets import *
-from errors import *
-from logger import *
+from hvlp.broker import *
+from hvlp.client import *
+from hvlp.packets import *
+from hvlp.errors import *
+from hvlp.logger import *
 
 import threading
+import sys
+
+sys.path.append(str('.'))
+sys.path.append(str('..'))
 
 
 ###################################################################################################

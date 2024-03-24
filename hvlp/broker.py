@@ -2,9 +2,6 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import sys
-sys.path.append(str('.'))
-
 from session import *
 from defines import *
 from register import *
@@ -12,6 +9,9 @@ from logger import *
 
 import socket
 import threading
+
+import sys
+sys.path.append(str('.'))
 
 
 class HvlpBroker(threading.Thread):

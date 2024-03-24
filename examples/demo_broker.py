@@ -1,14 +1,15 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from hvlp.broker import *
+from hvlp.logger import *
+
+import socket
 import sys
+
 sys.path.append(str('.'))
 sys.path.append(str('..'))
 
-from broker import *
-from logger import *
-
-import socket
 
 configure_logger()
 

@@ -3,12 +3,13 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+from hvlp.errors import *
+from hvlp.logger import *
+
 import sys
+
 sys.path.append(str('.'))
 sys.path.append(str('..'))
-
-from errors import *
-from logger import *
 
 
 ###################################################################################################

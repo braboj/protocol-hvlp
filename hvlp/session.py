@@ -1,10 +1,6 @@
 # encoding: utf-8
-
 from __future__ import print_function
 from __future__ import unicode_literals
-
-import sys
-sys.path.append(str('.'))
 
 from packets import *
 from defines import *
@@ -15,6 +11,10 @@ from six import with_metaclass
 import threading
 import socket
 import logging
+import sys
+
+sys.path.append(str('.'))
+sys.path.append(str('..'))
 
 
 class Session(with_metaclass(ABCMeta)):

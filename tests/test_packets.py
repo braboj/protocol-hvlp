@@ -2,12 +2,13 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from hvlp.packets import *
+from hvlp.logger import *
+
 import sys
+
 sys.path.append(str('.'))
 sys.path.append(str('..'))
-
-from packets import *
-from logger import *
 
 
 ###################################################################################################
@@ -28,7 +29,7 @@ def test_packet(payload=(1, 2, 3, 4, 5)):
     deserialized = Packet.from_bytes(serialized)
     logging.info("DESERIALIZED = {0}".format(deserialized))
 
-    assert(packet == deserialized)
+    assert (packet == deserialized)
 
 
 def test_connect(payload=(1, 2, 3, 4, 5)):
@@ -45,7 +46,7 @@ def test_connect(payload=(1, 2, 3, 4, 5)):
     deserialized = Packet.from_bytes(serialized)
     logging.info("DESERIALIZED = {0}".format(deserialized))
 
-    assert(packet == deserialized)
+    assert (packet == deserialized)
 
 
 def test_disconnect(payload=(1, 2, 3, 4, 5)):
@@ -62,7 +63,7 @@ def test_disconnect(payload=(1, 2, 3, 4, 5)):
     deserialized = Packet.from_bytes(serialized)
     logging.info("DESERIALIZED = {0}".format(deserialized))
 
-    assert(packet == deserialized)
+    assert (packet == deserialized)
 
 
 def test_subscribe(topics=('здравей', 'home')):
@@ -79,7 +80,7 @@ def test_subscribe(topics=('здравей', 'home')):
     deserialized = Packet.from_bytes(serialized)
     logging.info("DESERIALIZED = {0}".format(deserialized))
 
-    assert(packet == deserialized)
+    assert (packet == deserialized)
 
 
 def test_unsubscribe(topics=('здравей', 'home')):
@@ -96,7 +97,7 @@ def test_unsubscribe(topics=('здравей', 'home')):
     deserialized = Packet.from_bytes(serialized)
     logging.info("DESERIALIZED = {0}".format(deserialized))
 
-    assert(packet == deserialized)
+    assert (packet == deserialized)
 
 
 def test_publish(topic='здравей', data=(0xAA, 0x55)):
@@ -113,7 +114,7 @@ def test_publish(topic='здравей', data=(0xAA, 0x55)):
     deserialized = Packet.from_bytes(serialized)
     logging.info("DESERIALIZED = {0}".format(deserialized))
 
-    assert(packet == deserialized)
+    assert (packet == deserialized)
 
 
 ###################################################################################################

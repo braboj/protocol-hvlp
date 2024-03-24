@@ -1,10 +1,6 @@
 # coding: utf-8
-
 from __future__ import print_function
 from __future__ import unicode_literals
-
-import sys
-sys.path.append(str('.'))
 
 from packets import *
 from defines import *
@@ -15,7 +11,9 @@ from six.moves import input
 import socket
 import threading
 import logging
+
 import sys
+sys.path.append(str('.'))
 
 
 class HvlpClient(threading.Thread):

@@ -3,12 +3,13 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+from hvlp.register import HvlpBrokerRegister
+from hvlp.logger import *
+
 import sys
+
 sys.path.append(str('.'))
 sys.path.append(str('..'))
-
-from register import HvlpBrokerRegister
-from logger import *
 
 
 ###################################################################################################
@@ -32,7 +33,7 @@ def test_subscribe(register, session='test'):
     sessions = register.get_sessions()
     logging.info("After subscribe the registered sessions are `{0}`".format(session))
 
-    assert(session in sessions)
+    assert (session in sessions)
     register.reset()
 
 
@@ -46,7 +47,7 @@ def test_unsubscribe(register, session='test'):
     sessions = register.get_sessions()
     logging.info("After unsubscribe the registered sessions are {0}".format(sessions))
 
-    assert(sessions == [])
+    assert (sessions == [])
     register.reset()
 
 
@@ -60,7 +61,7 @@ def test_append(register):
 
     logging.info("The client `{0}` is now subscribed to {1}".format(client, subscriptions))
 
-    assert(subscriptions == topics)
+    assert (subscriptions == topics)
     register.reset()
 
 
@@ -117,7 +118,7 @@ def test_get_sessions(register):
     sessions = register.get_sessions()
     logging.info("The register has the following sessions: {0}".format(sessions))
 
-    assert(test_session in sessions)
+    assert (test_session in sessions)
     register.reset()
 
 

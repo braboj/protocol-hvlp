@@ -1,16 +1,16 @@
 # coding: utf-8
-
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import sys
-sys.path.append(str('.'))
-
 import logger
+import sys
+
+sys.path.append(str('.'))
+sys.path.append(str('..'))
 
 
 class HvlpError(Exception):
-    "Base error for the application"
+    """ Base error for the application """
 
     def __init__(self, message, reason):
         self.message = message

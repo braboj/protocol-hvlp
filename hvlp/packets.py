@@ -1,12 +1,13 @@
 # coding: utf-8
-
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import sys
-sys.path.append(str('.'))
-
 from errors import *
+
+import sys
+
+sys.path.append(str('.'))
+sys.path.append(str('..'))
 
 
 class Packet(object):
@@ -46,7 +47,7 @@ class Packet(object):
     def __ne__(self, other):
         """ Implementation of the '!=' operator """
 
-        result = not(self.__eq__(other))
+        result = not (self.__eq__(other))
         return result
 
     def __str__(self):

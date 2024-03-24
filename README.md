@@ -1,14 +1,13 @@
 ## Project Setup
 
-### 1. Checkout the HVLP project
+### 1. Clone the HVLP project
 
-http://server.hilscherdtc.local:81/svn/hilscherdtc_embedded/SVNPlayground/Education/bgeorgiev/hvlp_protocol
-
-![img.png](assets/project_checkout.png)
+Use a git client to clone the project from https://github.com/braboj/hvlp to
+a folder of your choice.
 
 ### 2. Go to the project folder
 
-![img.png](assets/project_folder.png)
+Type `cd <path to project folder>`
 
 ### 3. Open a new command terminal for the broker
 

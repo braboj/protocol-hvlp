@@ -118,7 +118,7 @@ class HvlpBrokerRegister(dict):
         with self.__lock:
             try:
                 result.extend(self[topic])
-            except KeyError as e:
+            except KeyError:
                 pass
 
         return result
