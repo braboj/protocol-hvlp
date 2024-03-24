@@ -2,16 +2,13 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from session import *
-from defines import *
-from register import *
-from logger import *
+from hvlp.session import *
+from hvlp.defines import *
+from hvlp.register import *
+from hvlp.logger import *
 
 import socket
 import threading
-
-import sys
-sys.path.append(str('.'))
 
 
 class HvlpBroker(threading.Thread):

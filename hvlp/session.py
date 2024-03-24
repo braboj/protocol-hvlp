@@ -2,8 +2,8 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from packets import *
-from defines import *
+from hvlp.packets import *
+from hvlp.defines import *
 
 from abc import ABCMeta, abstractmethod
 from six import with_metaclass
@@ -11,10 +11,6 @@ from six import with_metaclass
 import threading
 import socket
 import logging
-import sys
-
-sys.path.append(str('.'))
-sys.path.append(str('..'))
 
 
 class Session(with_metaclass(ABCMeta)):

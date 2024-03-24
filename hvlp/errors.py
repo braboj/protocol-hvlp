@@ -2,12 +2,7 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import logger
-import sys
-
-sys.path.append(str('.'))
-sys.path.append(str('..'))
-
+import hvlp.logger
 
 class HvlpError(Exception):
     """ Base error for the application """

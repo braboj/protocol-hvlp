@@ -3,13 +3,7 @@ from __future__ import unicode_literals
 
 from hvlp.broker import *
 from hvlp.logger import *
-
 import socket
-import sys
-
-sys.path.append(str('.'))
-sys.path.append(str('..'))
-
 
 configure_logger()
 

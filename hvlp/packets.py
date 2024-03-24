@@ -2,12 +2,7 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from errors import *
-
-import sys
-
-sys.path.append(str('.'))
-sys.path.append(str('..'))
+from hvlp.errors import *
 
 
 class Packet(object):

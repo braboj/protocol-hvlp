@@ -2,18 +2,15 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from packets import *
-from defines import *
-from logger import *
-from errors import *
+from hvlp.packets import *
+from hvlp.defines import *
+from hvlp.logger import *
+from hvlp.errors import *
 
 from six.moves import input
 import socket
 import threading
 import logging
-
-import sys
-sys.path.append(str('.'))
 
 
 class HvlpClient(threading.Thread):
