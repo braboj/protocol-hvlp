@@ -8,10 +8,6 @@ from hvlp.client import *
 from hvlp.logger import *
 
 import time
-import sys
-
-sys.path.append(str('.'))
-sys.path.append(str('..'))
 
 
 def test_connect():

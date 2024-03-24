@@ -5,11 +5,6 @@ from __future__ import unicode_literals
 from hvlp.packets import *
 from hvlp.logger import *
 
-import sys
-
-sys.path.append(str('.'))
-sys.path.append(str('..'))
-
 
 ###################################################################################################
 # MODULE TESTS

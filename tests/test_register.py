@@ -6,11 +6,6 @@ from __future__ import unicode_literals
 from hvlp.register import HvlpBrokerRegister
 from hvlp.logger import *
 
-import sys
-
-sys.path.append(str('.'))
-sys.path.append(str('..'))
-
 
 ###################################################################################################
 # MODULE TESTS
