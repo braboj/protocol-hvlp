@@ -16,7 +16,7 @@ def test_connect():
     broker.start()
     register = broker.register
 
-    # Perform the TCP handhsake
+    # Perform the TCP handshake
     client = HvlpClient(port=65000)
     client.open()
     time.sleep(1)
@@ -46,7 +46,7 @@ def test_disconnect():
     broker.start()
     register = broker.register
 
-    # Perform the TCP handhsake
+    # Perform the TCP handshake
     client = HvlpClient(port=65001)
 
     # Open the connection
@@ -56,7 +56,7 @@ def test_disconnect():
     # Get the last registered session
     session = register.get_sessions()[-1]
 
-    # Send a connect packet to the broker
+    # Send a `connect` packet to the broker
     client.connect()
     time.sleep(1)
 
@@ -77,7 +77,7 @@ def test_subscribe():
     broker.start()
     register = broker.register
 
-    # Perform the TCP handhsake
+    # Perform the TCP handshake
     client = HvlpClient(port=65002)
 
     # Open the connection
@@ -87,11 +87,11 @@ def test_subscribe():
     # Get the last registered session
     session = register.get_sessions()[-1]
 
-    # Send a connect packet to the broker
+    # Send a `connect` packet to the broker
     client.connect()
     time.sleep(1)
 
-    # Send a subscribe packet to the broker
+    # Send a `subscribe` packet to the broker
     client.subscribe('test')
     time.sleep(1)
 
