@@ -11,11 +11,15 @@ Type `cd <path to project folder>`
 
 ### 3. Open a new command terminal for the broker
 
+Type `set PYTHONPATH=.` to add the root folder to the module search paths.
+
 Type `python broker.py <IP ADDR> <PORT>` to start the broker. If omitted the default IP is 127.0.0.1 and the default port is 65432.
 
 ![img.png](assets/broker_start.png)
 
 ### 4. Open a new command terminal for a client
+
+Type `set PYTHONPATH=.` to add the root folder to the module search paths.
 
 Type `python client.py <SERVER ADDR> <PORT>` to start the client. If omitted the default server 
 address is 127.0.0.1 and the default port s 65432.
