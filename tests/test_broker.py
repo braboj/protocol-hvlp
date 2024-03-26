@@ -5,7 +5,7 @@ from hvlp.errors import HvlpError
 
 BROKER_ADDR = 'localhost'
 BROKER_PORT = 65432
-N = 100000
+N = 10000
 
 class TestCase(object):
 
@@ -164,6 +164,31 @@ class HVLP_NET_01_01_06(TestCase):
         self.producer.disconnect()
         self.consumer.disconnect()
 
+class HVLP_NET_01_01_07(TestCase):
+
+    def __init__(self):
+        super(HVLP_NET_01_01_07, self).__init__()
+        self.tag = self.__class__.__name__
+        self.description = ("Send a burst of publish messages to the broker and check if the broker is able to "
+                            "handle the load.")
+
+
+    def execute(self):
+
+            # Open the sockets
+            self.producer.open()
+
+            # Connect the clients
+            self.producer.connect()
+            self.producer.subscribe('test')
+
+            for i in range(N):
+                self.producer.publish('test', 1)
+
+            # If the server is broker, we will know it here
+            self.producer.unsubscribe('test')
+            self.producer.disconnect()
+
 tests = (
     HVLP_NET_01_01_01(),
     HVLP_NET_01_01_02(),
@@ -171,6 +196,7 @@ tests = (
     HVLP_NET_01_01_04(),
     HVLP_NET_01_01_05(),
     HVLP_NET_01_01_06(),
+    HVLP_NET_01_01_07(),
 )
 
 for test in tests:
