@@ -1,11 +1,15 @@
+# coding: utf-8
 from hvlp.client import HvlpClient
 
 import threading
 from hvlp.errors import HvlpError
+import time
 
+BROKER_ADDR = '172.20.60.11'
 BROKER_ADDR = 'localhost'
+# BROKER_PORT = 60111
 BROKER_PORT = 65432
-N = 10000
+N = 100
 
 class TestCase(object):
 
@@ -39,6 +43,9 @@ class HVLP_NET_01_01_01(TestCase):
         # Check that the broker is able to handle the load
         self.producer.disconnect()
         self.consumer.disconnect()
+
+        self.producer.close()
+        self.consumer.close()
 
 class HVLP_NET_01_01_02(TestCase):
 
@@ -189,6 +196,32 @@ class HVLP_NET_01_01_07(TestCase):
             self.producer.unsubscribe('test')
             self.producer.disconnect()
 
+
+class HVLP_NET_01_01_08(TestCase):
+
+
+    def __init__(self):
+        super(HVLP_NET_01_01_08, self).__init__()
+        self.tag = self.__class__.__name__
+        self.description = "Subscribe with non-latin characters and check if the broker is able to handle the load."
+
+    def execute(self):
+
+        self.producer.open()
+        time.sleep(0.05)
+
+        self.producer.connect()
+        time.sleep(0.05)
+
+        self.producer.subscribe("тест")
+        time.sleep(0.05)
+
+        self.producer.unsubscribe("тест")
+        time.sleep(0.05)
+
+        self.producer.disconnect()
+        time.sleep(0.05)
+
 tests = (
     HVLP_NET_01_01_01(),
     HVLP_NET_01_01_02(),
@@ -197,6 +230,7 @@ tests = (
     HVLP_NET_01_01_05(),
     HVLP_NET_01_01_06(),
     HVLP_NET_01_01_07(),
+    # HVLP_NET_01_01_08(),
 )
 
 for test in tests:

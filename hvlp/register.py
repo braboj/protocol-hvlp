@@ -16,16 +16,10 @@ class HvlpBrokerRegister(dict):
     """
 
     def __init__(self):
-
-        # Initialize the parent class
         super(HvlpBrokerRegister, self).__init__()
-
-        # Initialize the lock and the logger
         self.__lock = threading.RLock()
         self.__log = logging.getLogger(self.__class__.__name__)
         self.__log.addHandler(logging.NullHandler())
-
-        # Initialize the session list
         self.__sessions = []
 
     ###############################################################################################
@@ -80,7 +74,7 @@ class HvlpBrokerRegister(dict):
                 subscribers = self.get_subscribers(topic)
                 if client not in subscribers:
                     self.setdefault(topic, [])
-                    self[topic].subscribe(client)
+                    self[topic].append(client)
 
     ###############################################################################################
 
@@ -99,7 +93,7 @@ class HvlpBrokerRegister(dict):
                 for topic in topics:
 
                     # Remove the client from the subscriber list
-                    self[topic].unsubscribe(client)
+                    self[topic].remove(client)
 
                     # If no subscribers left, remove the topic
                     if not self[topic]:
@@ -160,7 +154,7 @@ class HvlpBrokerRegister(dict):
     ###############################################################################################
 
     def get_sessions(self):
-        """ Get all registered sessions
+        """ Get all registered client sessions
 
         Returns:
             List of sessions stored in the current register

@@ -24,7 +24,7 @@ def test_reset(register):
 
 def test_subscribe(register, session='test'):
 
-    register.subscribe(session)
+    register.add_session(session)
     sessions = register.get_sessions()
     logging.info("After subscribe the registered sessions are `{0}`".format(session))
 
@@ -34,11 +34,11 @@ def test_subscribe(register, session='test'):
 
 def test_unsubscribe(register, session='test'):
 
-    register.subscribe(session)
+    register.add_session(session)
     sessions = register.get_sessions()
     logging.info("After subscribe the registered sessions are `{0}`".format(sessions))
 
-    register.unsubscribe(session)
+    register.remove_session(session)
     sessions = register.get_sessions()
     logging.info("After unsubscribe the registered sessions are {0}".format(sessions))
 
@@ -51,7 +51,7 @@ def test_append(register):
     topics = ['test1', 'test2']
     client = 'test_client'
 
-    register.append(topics, client)
+    register.add_session(topics, client)
     subscriptions = register.get_topics(client)
 
     logging.info("The client `{0}` is now subscribed to {1}".format(client, subscriptions))
@@ -65,8 +65,8 @@ def test_remove(register):
     topics = ['test1', 'test2', 'test3']
     client = 'test_client'
 
-    register.append(topics, client)
-    register.remove(topics, client)
+    register.add_session(topics, client)
+    register.remove_session(topics, client)
     subscriptions = register.get_topics(client)
 
     logging.info("The client `{0}` is now subscribed to {1}".format(client, subscriptions))
@@ -80,7 +80,7 @@ def test_get_subscribers(register):
     topics = ['test1', 'test2']
     client = 'test_client'
 
-    register.append(topics, client)
+    register.add_session(topics, client)
 
     for topic in topics:
         subscribers = register.get_subscribers(topic)
@@ -95,7 +95,7 @@ def test_get_topics(register):
     topics = ['test1', 'test2']
     client = 'test_client'
 
-    register.append(topics, client)
+    register.add_session(topics, client)
     subscriptions = register.get_topics(client)
     logging.info("The client  `{0}` is subscribed to {1}".format(client, subscriptions))
 
@@ -108,7 +108,7 @@ def test_get_sessions(register):
     test_session = 'test session'
 
     logging.info("Notify the register with session name `{0}`".format(test_session))
-    register.subscribe(session=test_session)
+    register.add_session(session=test_session)
 
     sessions = register.get_sessions()
     logging.info("The register has the following sessions: {0}".format(sessions))

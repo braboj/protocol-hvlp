@@ -129,7 +129,7 @@ class HvlpSession(Session):
 
         """
 
-        self.register.append(topics=topics, client=self.client)
+        self.register.subscribe(topics=topics, client=self.client)
         self.log.debug(self.register)
 
     ###############################################################################################
@@ -142,7 +142,7 @@ class HvlpSession(Session):
 
         """
 
-        self.register.remove(topics=topics, client=self.client)
+        self.register.unsubscribe(topics=topics, client=self.client)
         self.log.debug(self.register)
 
     ###############################################################################################
@@ -176,7 +176,7 @@ class HvlpSession(Session):
 
             except socket.error:
                 self.log.debug("Client not accessible, deleting from the register")
-                self.register[packet.topic].remove(subscriber)
+                self.register[packet.topic].unsubscribe(subscriber)
 
     ###############################################################################################
 
@@ -250,7 +250,7 @@ class HvlpSession(Session):
         """
 
         self.log.debug("SESSION START")
-        self.register.subscribe(self)
+        self.register.add_session(self)
 
         # Start the data capture thread
         listener = threading.Thread(target=self.listen)
@@ -292,7 +292,7 @@ class HvlpSession(Session):
             self.client.close()
 
             # Remove session from the register
-            self.register.unsubscribe(self)
+            self.register.remove_session(self)
 
             # Show the register before
             self.log.debug("Register before : {0}".format(self.register.get_sessions()))
@@ -300,7 +300,7 @@ class HvlpSession(Session):
             # Remove the client connection from the registry
             for topic in self.register.keys():
                 if self.client in self.register[topic]:
-                    self.register[topic].remove(self.client)
+                    self.register[topic].unsubscribe(self.client)
 
             # Show the register after
             self.log.debug("Register after : {0}".format(self.register.get_sessions()))
