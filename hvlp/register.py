@@ -7,13 +7,25 @@ import threading
 
 
 class HvlpBrokerRegister(dict):
-    """ Thread-safe register class for the HVLP broker """
+    """ Thread-safe register class for the HVLP broker.
+
+    This class is a dictionary that keeps track of the connections, stores the topics and the
+    clients subscribed to them. The class is thread-safe and can be accessed by multiple threads
+    at the same time.
+
+    """
 
     def __init__(self):
+
+        # Initialize the parent class
         super(HvlpBrokerRegister, self).__init__()
+
+        # Initialize the lock and the logger
         self.__lock = threading.RLock()
         self.__log = logging.getLogger(self.__class__.__name__)
         self.__log.addHandler(logging.NullHandler())
+
+        # Initialize the session list
         self.__sessions = []
 
     ###############################################################################################
@@ -27,7 +39,7 @@ class HvlpBrokerRegister(dict):
 
     ###############################################################################################
 
-    def subscribe(self, session):
+    def add_session(self, session):
         """ Add an element as a new session.
 
         Args:
@@ -40,7 +52,7 @@ class HvlpBrokerRegister(dict):
 
     ###############################################################################################
 
-    def unsubscribe(self, session):
+    def remove_session(self, session):
         """ Add an element as a new session.
 
         Args:
@@ -53,7 +65,7 @@ class HvlpBrokerRegister(dict):
 
     ###############################################################################################
 
-    def append(self, topics, client):
+    def subscribe(self, topics, client):
         """ Add the client to the topic's dictionary
 
         Args:
@@ -68,11 +80,11 @@ class HvlpBrokerRegister(dict):
                 subscribers = self.get_subscribers(topic)
                 if client not in subscribers:
                     self.setdefault(topic, [])
-                    self[topic].append(client)
+                    self[topic].subscribe(client)
 
     ###############################################################################################
 
-    def remove(self, topics, client):
+    def unsubscribe(self, topics, client):
         """ Remove the client from the topic's dictionary
 
         Args:
@@ -87,7 +99,7 @@ class HvlpBrokerRegister(dict):
                 for topic in topics:
 
                     # Remove the client from the subscriber list
-                    self[topic].remove(client)
+                    self[topic].unsubscribe(client)
 
                     # If no subscribers left, remove the topic
                     if not self[topic]:
@@ -148,7 +160,7 @@ class HvlpBrokerRegister(dict):
     ###############################################################################################
 
     def get_sessions(self):
-        """ Get all registered client sessions
+        """ Get all registered sessions
 
         Returns:
             List of sessions stored in the current register
