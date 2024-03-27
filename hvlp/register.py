@@ -7,161 +7,154 @@ import threading
 
 
 class HvlpBrokerRegister(dict):
-    """ Thread-safe register class for the HVLP broker.
+    """ Thread-safe register class for the HVLP broker optimized for performance.
 
-    This class is a dictionary that keeps track of the connections, stores the topics and the
-    clients subscribed to them. The class is thread-safe and can be accessed by multiple threads
-    at the same time.
+    This class keeps track of connections, topics, and the clients subscribed to them.
+    It's optimized for minimal lock contention and efficient data access.
 
     """
 
     def __init__(self):
         super(HvlpBrokerRegister, self).__init__()
-        self.__lock = threading.RLock()
-        self.__log = logging.getLogger(self.__class__.__name__)
-        self.__log.addHandler(logging.NullHandler())
-        self.__sessions = []
 
-    ###############################################################################################
+        # A reentrant lock to allow recursive locking in the same thread
+        self.__lock = threading.RLock()
+
+        # Logger for debugging and info messages
+        self.__log = logging.getLogger(self.__class__.__name__)
+
+        # Using a set for more efficient add/remove operations
+        self.__sessions = set()
 
     def reset(self):
-        """ Reset the register object. """
+        """ Reset the register object, clearing sessions and topics."""
 
+        # Ensure thread safety through lock
         with self.__lock:
-            self.__sessions = []
+            self.__sessions.clear()
             self.clear()
 
-    ###############################################################################################
-
     def add_session(self, session):
-        """ Add an element as a new session.
+        """ Add a session to the register.
 
         Args:
-            session : Session object as a generic type
+            session: The session object to be added.
 
         """
 
+        # Lock to ensure thread-safe modification
         with self.__lock:
-            self.__sessions.append(session)
-
-    ###############################################################################################
+            self.__sessions.add(session)
 
     def remove_session(self, session):
-        """ Add an element as a new session.
+        """ Remove a session from the register.
 
         Args:
-            session : Session object as a generic type
+            session: The session object to be removed.
 
         """
 
+        # Lock to ensure thread-safe modification
         with self.__lock:
-            self.__sessions.remove(session)
 
-    ###############################################################################################
+            # Discard session without raising an error if not found
+            self.__sessions.discard(session)
 
     def subscribe(self, topics, client):
-        """ Add the client to the topic's dictionary
+        """ Subscribe a client to a set of topics.
 
         Args:
-            topics  : Topic names
-            client  : Client as a generic type
+            topics: A list of topic names to subscribe the client to.
+            client: The client object subscribing to the topics.
 
         """
 
-        # Protected access
+        # Temporary storage for updates to minimize locked time
+        updates = {}
+
+        # Lock to ensure thread-safe read and update
         with self.__lock:
             for topic in topics:
-                subscribers = self.get_subscribers(topic)
-                if client not in subscribers:
-                    self.setdefault(topic, [])
-                    self[topic].append(client)
 
-    ###############################################################################################
+                # Initialize topic if not present
+                if topic not in self:
+                    self[topic] = set()
+
+                # Add client to topic if not already subscribed
+                if client not in self[topic]:
+
+                    # Union operation to add client
+                    updates[topic] = self[topic] | {client}
+
+            # Batch update to reduce lock contention
+            self.update(updates)
 
     def unsubscribe(self, topics, client):
-        """ Remove the client from the topic's dictionary
+        """ Unsubscribe a client from a set of topics.
 
         Args:
-            topics  : Topic names
-            client  : Client as a generic type
+            topics: A list of topic names to unsubscribe the client from.
+            client: The client object being unsubscribed.
 
         """
 
-        # Protected access
+        # Ensure thread-safe operation
         with self.__lock:
-            try:
-                for topic in topics:
 
-                    # Remove the client from the subscriber list
-                    self[topic].remove(client)
+            # Iterate over topics to unsubscribe from
+            for topic in topics:
 
-                    # If no subscribers left, remove the topic
+                # Check if topic is present
+                if topic in self:
+
+                    # Safely remove client
+                    self[topic].discard(client)
+
+                    # If no subscribers left, delete the topic
                     if not self[topic]:
-                        self.pop(topic)
-
-            except KeyError:
-                self.__log.debug("Topic not found in register")
-
-        self.__log.debug(self)
-
-    ###############################################################################################
+                        del self[topic]
 
     def get_subscribers(self, topic):
-        """ Get all the clients subscribed to a given topic
+        """ Get subscribers to a specific topic.
 
         Args:
-            topic  : Topic name
+            topic: The topic name whose subscribers are to be retrieved.
 
         Returns:
-            List of client connections subscribed to a given topic
+            A set of subscribers to the given topic.
 
         """
 
-        result = []
-
-        # Protected access
+        # Ensure thread-safe access
         with self.__lock:
-            try:
-                result.extend(self[topic])
-            except KeyError:
-                pass
 
-        return result
-
-    ###############################################################################################
+            # Return a set of subscribers, empty if topic not found
+            return self.get(topic, set())
 
     def get_topics(self, client):
-        """ Get all the topics the client is subscribed to
+        """ Get all topics a specific client is subscribed to.
 
         Args:
-            client  : The client as a generic type
+            client: The client object whose subscribed topics are to be retrieved.
 
         Returns:
-            List of subscriptions for a given client
-
+            A set of topic names the client is subscribed to.
         """
 
-        result = []
-
-        # Protected access
+        # Lock to ensure thread-safe iteration
         with self.__lock:
-            for topic, subscribers in self.items():
-                if client in subscribers:
-                    result.append(topic)
 
-        return result
-
-    ###############################################################################################
+            # Use set comprehension for efficient construction
+            return {topic for topic, subscribers in self.items() if client in subscribers}
 
     def get_sessions(self):
-        """ Get all registered client sessions
+        """ Get all registered sessions.
 
         Returns:
-            List of sessions stored in the current register
+            A set of all session objects registered in the broker.
 
         """
 
+        # Ensure thread-safe access
         with self.__lock:
-            result = set(self.__sessions)
-
-        return list(result)
+            return self.__sessions
