@@ -1,3 +1,9 @@
+# HVLP - Hilscher Variable Length Protocol
+
+HVLP is a simple protocol for sending messages between clients and a broker. The protocol is 
+based on the MQTT protocol and is implemented in Python. The main focus of the project is to
+demonstrate the use of OOP, SOLID principles, sockets and threading in Python. 
+
 ## Project Setup
 
 ### 1. Clone the HVLP project
