@@ -1,0 +1,21 @@
+@startuml
+participant "Client A" as A
+participant "Broker" as B
+participant "Client B" as C
+
+A -> B : connect
+A -> B : subscribe "Temperature"
+B -> B : add client to the topic
+
+C -> B : subscribe "Temperature"
+B -> B : add client to the topic
+
+A -> B : publish "Temperature", 25
+B -> C : publish "Temperature", 25
+
+C -> B : unsubscribe "Temperature"
+B -> B : remove client from the topic
+
+A -> B : disconnect
+B -> B : remove the client from all topics
+@enduml
