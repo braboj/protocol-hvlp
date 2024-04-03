@@ -4,6 +4,14 @@ HVLP is a simple protocol for sending messages between clients and a broker. The
 based on the MQTT protocol and is implemented in Python. The main focus of the project is to
 demonstrate the use of OOP, SOLID principles, sockets and threading in Python. 
 
+## Features
+
+- Connect to a broker
+- Subscribe to a topic
+- Publish to a topic
+- Disconnect from a broker
+- Support for multiple clients
+
 ## Project Setup
 
 ### 1. Clone the HVLP project
@@ -21,7 +29,7 @@ Type `set PYTHONPATH=.` to add the root folder to the module search paths.
 
 Type `python broker.py <IP ADDR> <PORT>` to start the broker. If omitted the default IP is 127.0.0.1 and the default port is 65432.
 
-![img.png](assets/broker_start.png)
+![img.png](assets/images/broker_start.png)
 
 ### 4. Open a new command terminal for a client
 
@@ -30,35 +38,35 @@ Type `set PYTHONPATH=.` to add the root folder to the module search paths.
 Type `python client.py <SERVER ADDR> <PORT>` to start the client. If omitted the default server 
 address is 127.0.0.1 and the default port s 65432.
 
-![img.png](assets/client_start.png)
+![img.png](assets/images/client_start.png)
 
 ### 5. Connect the client to the broker
 
 Type `connect` in the client console to connect to the broker
 
-![img.png](assets/connect.png)
+![img.png](assets/images/connect.png)
 
 ### 6. Subscribe the client to a topic
 
 Type `subscribe test` in the client console to subscribe to a topic
 
-![img.png](assets/subscribe.png)
+![img.png](assets/images/subscribe.png)
 
 ### 7. Repeat steps 4-6 to add a second client
 
-![img.png](assets/two_clients.png)
+![img.png](assets/images/two_clients.png)
 
 ### 8. Publish to a topic
 
 Type publish test 1 in one of the client consoles.
 
-![img.png](assets/publish.png)
+![img.png](assets/images/publish.png)
 
 ### 9. Get help how to use the application
 
 Type `help` in the client console for more commands
 
-![img.png](assets/help.png)
+![img.png](assets/images/help.png)
 
 ### 10. Exit the applications
 
