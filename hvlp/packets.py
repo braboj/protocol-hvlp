@@ -4,12 +4,6 @@ from __future__ import unicode_literals
 
 from hvlp.errors import *
 
-# TODO: Decide what to do when the other side sends garbage data. Should we
-#  close the connection or just ignore it? If we ignore it, we should log it.
-#  If we close the connection, we should also log it. The decision should be
-#  made by the user of the library. We can add a parameter to the constructor
-#  to decide what to do in this case. The default should be to ignore it.
-
 class Packet(object):
     """ Generic template packet class
 
