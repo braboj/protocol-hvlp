@@ -1,6 +1,6 @@
 ## Class Diagram
 
-![hvlp_diagram.png](../assets/hvlp_diagram.png)
+![hvlp_diagram.png](../assets/images/hvlp_diagram.png)
 
 ## Basic Workflow
 
